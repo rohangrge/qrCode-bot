@@ -9,6 +9,11 @@ from dotenv import load_dotenv
 import pyqrcode
 import png
 from pyqrcode import QRCode
+#from qrtools import QR
+import qrtools
+from pyzbar import pyzbar
+import argparse
+import cv2
 
 load_dotenv()
 
@@ -38,8 +43,19 @@ async def on_message(message):
                 url = pyqrcode.create(link)
                 url.png('myqr.png', scale=6)
                 await message.reply(file=discord.File('myqr.png'))
+                os.remove('myqr.png')
             except:
                 await message.reply("sorry bot is unable to create qr")
+        if(imsg.startswith("$rimg")):
+            #d = qrtools.QR()
+            attachment = message.attachments
+            await attachment[0].save(attachment[0].filename)
+            image = cv2.imread(attachment[0].filename)
+            barcodes = pyzbar.decode(image)
+            for barcode in barcodes:
+                barcodeData = barcode.data.decode("utf-8")
+            os.remove(attachment[0].filename)
+            await message.reply(barcodeData)
 
 
 keep_alive()

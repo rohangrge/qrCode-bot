@@ -33,7 +33,7 @@ async def on_message(message):
     imsg = message.content
     async with message.channel.typing():
         if(imsg.startswith("$help")):
-            await message.channel.send("$qrcode <link> to get the qrcode")
+            await message.channel.send("$qrcode <link> to get the qrcode\n$rimg and attach image to read qr code")
         if(imsg.startswith("$startgame")):
             # await message.channel.send(message.author.guild.id)
             await message.reply(message.mentions)

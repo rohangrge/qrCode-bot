@@ -43,6 +43,7 @@ async def on_message(message):
             try:
                 url = pyqrcode.create(link)
                 url.png('myqr.png', scale=6)
+                logfile.write("succesfully created qr\n")
                 await message.reply(file=discord.File('myqr.png'))
                 os.remove('myqr.png')
                 logfile.write("succesfully created qr\n")
@@ -68,5 +69,5 @@ async def on_message(message):
 
 keep_alive()
 my_secret = os.getenv('token')
-print(my_secret)
+# print(my_secret)
 client.run(my_secret)

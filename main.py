@@ -31,13 +31,15 @@ async def on_message(message):
         return
 
     imsg = message.content
-    async with message.channel.typing():
-        if(imsg.startswith("$help")):
+    if(imsg.startswith("$help")):
+        async with message.channel.typing():
             await message.channel.send("$qrcode <link> to get the qrcode\n$rimg and attach image to read qr code")
-        if(imsg.startswith("$startgame")):
+    if(imsg.startswith("$startgame")):
+        async with message.channel.typing():
             # await message.channel.send(message.author.guild.id)
             await message.reply(message.mentions)
-        if(imsg.startswith("$qrcode")):
+    if(imsg.startswith("$qrcode")):
+        async with message.channel.typing():
             link = imsg.split("$qrcode ", 1)[1]
             try:
                 url = pyqrcode.create(link)
@@ -46,8 +48,8 @@ async def on_message(message):
                 os.remove('myqr.png')
             except:
                 await message.reply("sorry bot is unable to create qr")
-        if(imsg.startswith("$rimg")):
-            #d = qrtools.QR()
+    if(imsg.startswith("$rimg")):
+        async with message.channel.typing():
             attachment = message.attachments
             await attachment[0].save(attachment[0].filename)
             image = cv2.imread(attachment[0].filename)

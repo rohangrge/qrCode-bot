@@ -32,13 +32,14 @@ async def on_message(message):
         return
 
     imsg = message.content
-    logfile.write(imsg+'\n')
+
     if(imsg.startswith("$help")):
         async with message.channel.typing():
             await message.channel.send("$qrcode <link> to get the qrcode\n$rimg and attach image to read qr code")
 
     if(imsg.startswith("$qrcode")):
         async with message.channel.typing():
+            logfile.write(imsg+'\n')
             link = imsg.split("$qrcode ", 1)[1]
             try:
                 url = pyqrcode.create(link)
@@ -67,7 +68,7 @@ async def on_message(message):
                 await message.reply("sorry,the bot is not optimised for this qr code,I am working on it")
 
 
-keep_alive()
+# keep_alive()
 my_secret = os.getenv('token')
 # print(my_secret)
 client.run(my_secret)

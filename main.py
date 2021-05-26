@@ -48,9 +48,10 @@ async def on_message(message):
                 await message.reply(file=discord.File('myqr.png'))
                 os.remove('myqr.png')
                 logfile.write("succesfully created qr\n")
-            except:
+            except Exception as e:
                 logfile.write("qr create unsuccesful \n")
                 await message.reply("sorry bot is unable to create qr")
+                await client.get_channel(847152178649104414).send(e)
     if(imsg.startswith("$rimg")):
         async with message.channel.typing():
             attachment = message.attachments

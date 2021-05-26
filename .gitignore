@@ -1,3 +1,4 @@
 .env
 __pycache__/keep_alive.cpython-38.pyc
 myqr.png
+main.py

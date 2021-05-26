@@ -14,6 +14,7 @@ import qrtools
 from pyzbar import pyzbar
 import argparse
 import cv2
+import qrcode
 
 load_dotenv()
 
@@ -42,8 +43,10 @@ async def on_message(message):
             logfile.write(imsg+'\n')
             link = imsg.split("$qrcode ", 1)[1]
             try:
-                url = pyqrcode.create(link)
-                url.png('myqr.png', scale=6)
+                '''url = pyqrcode.create(link)
+                url.png('myqr.png', scale=5)'''
+                img = qrcode.make(link)
+                img.save('myqr.png')
                 logfile.write("succesfully created qr\n")
                 await message.reply(file=discord.File('myqr.png'))
                 os.remove('myqr.png')
